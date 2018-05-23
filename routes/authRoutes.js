@@ -3,7 +3,8 @@ var db = require('../util/db');
 
 function getUserDetails(userId){
     const details = db.User.findById(userId);
-    return Promise.all([user]);
+    console.log(details);
+    return Promise.all([details]);
 };
 
 module.exports = app => {

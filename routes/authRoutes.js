@@ -1,5 +1,10 @@
 const passport = require('passport');
-const ud = require('../util/userdetails');
+var db = require('../util/db');
+
+function getUserDetails(userId){
+    const details = db.User.findById(userId);
+    return Promise.all([user]);
+};
 
 module.exports = app => {
 
@@ -15,8 +20,8 @@ module.exports = app => {
     });    
     
     app.get('/users/me', (req,res)=>{
-        ud.getUserDetails(req.user.id).then(data => {
-          res.send(data)
+        getUserDetails(req.user.id).then(data => {
+          res.send(data);
         });;
     });
 

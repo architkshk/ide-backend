@@ -30,16 +30,21 @@ const sequelize = process.env.DATABASE_URL ?
             },
         });
 
-const User = sequelize.define('user',{
+sequelize.authenticate().then(() => {
+  console.log("Success!");
+  const User = sequelize.define('user',{
     id : {
          type      : Sequelize.INTEGER,
          primaryKey: true,
          autoIncrement: true
     },
     oneauthId : Sequelize.STRING,
-    role : Sequelize.ENUM(['admin','user'])
+    role : Sequelize.ENUM(['user'])
+    });
+    
+}).catch((err) => {
+  console.log(err);
 });
-
 
 module.exports = {
   pool,

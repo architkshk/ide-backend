@@ -9,8 +9,9 @@ const index = require ('./routes/index');
 const users = require ('./routes/users');
 const code = require ('./routes/code');
 
-const U = require ('./util/util')
-;
+const U = require ('./util/util');
+
+const passport = require('./auth/passport')
 
 const app = express ();
 
@@ -26,6 +27,7 @@ app.use (bodyParser.urlencoded ({ extended: false }));
 app.use (cookieParser ());
 app.use (express.static (path.join (__dirname, 'public')));
 app.use (express.static (path.join (__dirname, '.well-known')));
+app.use (passport.initialize())
 
 app.get ('*', U.setCorsHeaders)
 app.post ('*', U.setCorsHeaders)

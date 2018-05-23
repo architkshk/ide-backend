@@ -3,16 +3,26 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "start.dev": "cross-env IDE_ENV=localhost node ./bin/www"
   },
   "dependencies": {
-    "pg": "~7.0.2",
+    "axios": "^0.18.0",
     "body-parser": "~1.17.1",
     "cookie-parser": "~1.4.3",
+    "cross-env": "^5.1.6",
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "jade": "~1.11.0",
     "morgan": "~1.8.1",
-    "serve-favicon": "~2.4.2"
+    "parse-database-url": "^0.3.0",
+    "passport": "^0.4.0",
+    "passport-http-bearer": "^1.0.1",
+    "passport-oneauth": "^1.2.5",
+    "pg": "^7.0.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.37.8",
+    "serve-favicon": "~2.4.2",
+    "uid2": "0.0.3"
   }
 }

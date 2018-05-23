@@ -1,14 +1,48 @@
-const PG = require ('pg'),
-  U = require ('./util')
-;
+const PG = require ('pg');
+const Sequelize = require('sequelize');
+const secrets = require('../secrets');
 
 const pool = new PG.Pool({
-  host: U.requireFromEnvironment('IDE_DB_HOST'),
-  user: U.requireFromEnvironment('IDE_DB_USER'),
-  password: U.requireFromEnvironment('IDE_DB_PASSWORD'),
-  database: U.requireFromEnvironment('IDE_DB_NAME'),
+  host: secrets.HOST,
+  user: secrets.USER,
+  password: secrets.PASS,
+  database: secrets.DB_NAME,
   max: 50,
   idleTimeoutMillis: 30000
 });
 
-module.exports = pool
+
+
+const sequelize = process.env.DATABASE_URL ?
+    new Sequelize(process.env.DATABASE_URL) :
+
+    new Sequelize(
+        secrets.DB_NAME || 'ide',
+        secrets.USER || 'ide',
+        secrets.PASS || 'ide',
+        {
+            host: secrets.HOST  || 'localhost',
+            dialect: 'postgres',
+            pool: {
+                max: 5,
+                min: 0,
+                idle: 10000
+            },
+        });
+
+const User = sequelize.define('user',{
+    id : {
+         type      : Sequelize.INTEGER,
+         primaryKey: true,
+         autoIncrement: true
+    },
+    oneauthId : Sequelize.STRING,
+    role : Sequelize.ENUM(['admin','user'])
+});
+
+
+module.exports = {
+  pool,
+  Database: sequelize,
+  User
+}

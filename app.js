@@ -7,7 +7,12 @@ const bodyParser = require ('body-parser');
 
 const index = require ('./routes/index');
 const users = require ('./routes/users');
+const authRoutes = require ('./routes/authRoutes');
 const code = require ('./routes/code');
+const passport = require('./auth/passportStrategies');
+const cookieSession = require('cookie-session');
+const auth = require('./util/auth');
+const secrets = require('./secrets.json');
 
 const U = require ('./util/util')
 ;
@@ -26,6 +31,16 @@ app.use (bodyParser.urlencoded ({ extended: false }));
 app.use (cookieParser ());
 app.use (express.static (path.join (__dirname, 'public')));
 app.use (express.static (path.join (__dirname, '.well-known')));
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [secrets.secret]
+  })
+);
+
+//initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get ('*', U.setCorsHeaders)
 app.post ('*', U.setCorsHeaders)
@@ -35,6 +50,7 @@ app.options ('*', U.setCorsHeaders)
 app.use ('/', index);
 app.use ('/users', users);
 app.use ('/code', code);
+require('./routes/authRoutes')(app);
 
 app.use ('/.well-known', express.static (path.join (__dirname, '.well-known')));
 

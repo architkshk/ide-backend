@@ -26,19 +26,14 @@ router.get('/me', passport.authenticate('bearer'), (req, res, next) => {
   if (!req.user) {
     return res.status(401).send("Please Login")
   } else {
-    models.AuthToken.findOne({
+    models.User.findOne({
       where: {
-        userId: req.user.id
+        id: req.user.id
       }
-    }).then((authtoken) => {
-      axios.get('https://account.codingblocks.com/api/users/me', {
-        'headers': {
-          'Authorization': 'Bearer ' + authtoken.accesstoken
-        }
-      }).then((data) => {
-        res.send(data.data);
-      })
+    }).then((user) => {
+      res.send(user.get());
     }).catch((err) => {
+      console.log(err)
       res.status(500).send("Server Error")
     })
 

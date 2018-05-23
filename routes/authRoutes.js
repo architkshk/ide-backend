@@ -2,8 +2,7 @@ const passport = require('passport');
 var db = require('../util/db');
 
 function getUserDetails(userId){
-    const details = db.User.findById(userId);
-    console.log(details);
+    const details = db.User.findOne({id : userId});
     return Promise.all([details]);
 };
 
@@ -22,7 +21,7 @@ module.exports = app => {
     
     app.get('/users/me', (req,res)=>{
         getUserDetails(req.user.id).then(data => {
-          res.send(data);
+          res.send({data: data});
         });;
     });
 

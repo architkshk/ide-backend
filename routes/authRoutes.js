@@ -1,6 +1,3 @@
-const basicAuth = require('express-basic-auth')
-const Sequelize = require('sequelize');
-const rp = require('request-promise');
 const passport = require('passport');
 
 module.exports = app => {

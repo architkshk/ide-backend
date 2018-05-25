@@ -12,19 +12,19 @@ passport.use('bearer', bearerStrategy);
 
 passport.serializeUser(function (authtokenObject, done) {
   return done(null, {
-    id: authtokenObject.userId
+    id: authtokenObject.UserId
   })
 
 });
 
-passport.deserializeUser(function (user, done) {
+passport.deserializeUser(function (User, done) {
 
   models.User.findOne({
     where: {
-      id: user.id
+      id: User.id
     }
-  }).then((user) => {
-    return done(null, user);
+  }).then((User) => {
+    return done(null, User);
   });
 
 });

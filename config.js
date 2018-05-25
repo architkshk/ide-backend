@@ -20,7 +20,7 @@ switch (config.DEPLOY_CONFIG) {
     config.hostName = 'https://ide.codingblocks.com'
     break;
 
-  case 'localhost':
+  case 'development':
     config.secrets = require('./secrets-sample')
     config.db = config.secrets.DATABASE
     config.clientId = config.secrets.ONEAUTH.CLIENT_ID;

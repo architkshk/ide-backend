@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const passport = require('./../auth/passport')
-const axios = require('axios')
-const models = require('../util/dbmodels')
+const models = require('../models')
 
 /* GET users listing. */
 router.get('/', function (req, res, next) {

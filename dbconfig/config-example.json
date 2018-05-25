@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "ideuser",
+    "password": "idepass",
+    "database": "idedb",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "ideuser",
+    "password": "idepass",
+    "database": "idedb",
+    "host": "localhost",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "ideuser",
+    "password": "idepass",
+    "database": "idedb",
+    "host": "localhost",
+    "dialect": "postgres"
+  }
+}

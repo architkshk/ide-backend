@@ -4,7 +4,7 @@
 
 const oneauthStrategy = require('passport-oneauth').Strategy;
 const uid = require('uid2')
-const models = require('../../util/dbmodels');
+const models = require('../../models');
 const config = require('../../config');
 
 module.exports = new oneauthStrategy({
@@ -23,7 +23,7 @@ module.exports = new oneauthStrategy({
         defaults: {
           accesstoken: accessToken,
           clienttoken: uid(16),
-          user: {
+          User: {
             oneauthId: profile.id,
             role: profile.role,
           }
@@ -31,9 +31,12 @@ module.exports = new oneauthStrategy({
         include: [models.User]
       }
     ).then(function (authtokenObject) {
-      return done(null, authtokenObject[0].get())
+      authtokenObject = authtokenObject[0].get()
+      authtokenObject.User = authtokenObject.User.get()
+      return done(null, authtokenObject)
     }).catch(function (err) {
       console.log(err);
+      res.status(500).send("Server Error")
     })
 
   }

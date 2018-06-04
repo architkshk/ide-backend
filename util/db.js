@@ -1,12 +1,12 @@
 const PG = require ('pg'),
-  U = require ('./util')
+ config = require('../config')
 ;
 
 const pool = new PG.Pool({
-  host: U.requireFromEnvironment('IDE_DB_HOST'),
-  user: U.requireFromEnvironment('IDE_DB_USER'),
-  password: U.requireFromEnvironment('IDE_DB_PASSWORD'),
-  database: U.requireFromEnvironment('IDE_DB_NAME'),
+  host: config.db.HOST,
+  user: config.db.USER,
+  password: config.db.PASSWORD,
+  database: config.db.DB,
   max: 50,
   idleTimeoutMillis: 30000
 });
